@@ -1,7 +1,8 @@
 const mongoose = require('mongoose')
+const bcrypt = require('bcryptjs')
+
 const Schema = mongoose.Schema
-const bcrypt = require('bcrypt')
-const saltRounds = 10
+const saltRounds = Number(process.env.SALTROUNDS)
 
 const supplierSchema = new Schema({
   name: String,

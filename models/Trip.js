@@ -6,26 +6,58 @@ const tripSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Supplier'
   },
-  name: String,
-  startDate: Date,
-  endDate: Date,
-  price: Number,
+  name: {
+    type: String,
+    required: true
+  },
+  startDate: {
+    type: Date,
+    required: true
+  },
+  endDate: {
+    type: Date,
+    required: true
+  },
+  price: {
+    type: Number, 
+    required: true
+  },
   location: {
-    city: String,
-    country: String,
+    city: {
+      type: String ,
+      required: true
+    },
+    country: {
+      type: String,
+      required: true
+    },
     latitude: Number,
     longitude: Number,
   },
-  quota: Number,
+  quota: {
+    type: Number,
+    required: true
+  },
   difficulty: String,
   description: {
-    highlight: String,
+    highlight: {
+      type: String,
+      required: true
+    },
     inclusive: String,
     excludes: String,
     itinerary: String,
     notes: String,
     terms: String
   },
+  category: {
+    type: String,
+    required: true
+  },
+  promoteStatus: {
+    type: Boolean,
+    required: true
+  }
 }, {
   timestamps: true
 })

@@ -1,18 +1,28 @@
 const express = require('express')
-const trip = express.Router()
+const trips = express.Router()
 const { 
   findAll, 
   findOne, 
   findBySupplier,
   addTrip,
-  deleteTrip 
+  deleteTrip,
+  getPromotedTrips,
+  getDivingTrips,
+  getPartyTrips,
+  getHopingTrips,
+  getFilteredTrips
 } = require('../controllers/trip.controller')
 
-trip
+trips
   .get('/', findAll)
-  .get('/:id', findOne)
+  // .get('/:id', findOne)
+  .get('/promoted', getPromotedTrips)
+  .get('/diving', getDivingTrips)
+  .get('/party', getPartyTrips)
+  .get('/islandhoping', getHopingTrips)
+  .get('/filter', getFilteredTrips)
   .get('/by/:supplierName', findBySupplier)
   .post('/by/:supplierName', addTrip)
   .delete('/:id', deleteTrip)
 
-module.exports = trip
+module.exports = trips

@@ -1,8 +1,8 @@
 const User = require('../models/User')
 const jwt = require('jsonwebtoken')
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
 
-const privateKey = 'katakunci'
+const privateKey = process.env.PRIVATEKEY
 
 module.exports = {
   findAll: (req, res) => {
@@ -44,7 +44,7 @@ module.exports = {
       lastName: req.body.lastName,
       dob: req.body.dob,
       gender: req.body.gender,
-      // phone: req.body.phone,
+      phone: req.body.phone || '',
       email: req.body.email,
       password: req.body.password,
     })
@@ -96,13 +96,13 @@ module.exports = {
           })
         } else {
           res.status(400).json({
-            message: 'ERROR: user is unable to sign in',
+            message: 'ERROR user sign in: incorrect password',
           })
         }
       })
       .catch(err => {
         res.status(404).json({
-          message: 'ERROR: user is unable to sign in',
+          message: 'ERROR find user: user is unable to sign in',
           err
         })
       })
@@ -127,19 +127,38 @@ module.exports = {
   deleteUser: (req, res) => {
     let { _id } = req.decoded;
     User.findByIdAndRemove( _id )
-    .exec()
-    .then(user => {
-      res.status(200).json({
-        message: 'User deleted',
-        user
+      .exec()
+      .then(user => {
+        res.status(200).json({
+          message: 'User deleted',
+          user
+        })
       })
-    })
-    .catch(err => {
-      res.status(400).json({
-        message: 'ERROR: unable to delete user',
-        err
+      .catch(err => {
+        res.status(400).json({
+          message: 'ERROR: unable to find user to delete',
+          err
+        })
       })
-    })
+  },
+  updatePhone: (req, res) => {
+    let { _id } = req.decoded;
+    let { phone } = req.body;
+
+    User.findByIdAndUpdate( _id, { phone } )
+      .exec()
+      .then(user => {
+        res.status(200).json({
+          message: 'User phone updated',
+          user
+        })
+      })
+      .catch(err => {
+        res.status(400).json({
+          message: 'ERROR: unable to find user to update phone',
+          err
+        })
+      })
   }
 
 }
