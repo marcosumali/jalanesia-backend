@@ -22,18 +22,20 @@ const userSchema = new Schema({
     type: String,
     required: 'password is required',
   },
-  trip: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Trip'
-  }],
-  wishlist: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Trip'
-  }],
-  history: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Trip'
-  }],
+  
+  // trip: [{
+  //   type: Schema.Types.ObjectId,
+  //   ref: 'Trip'
+  // }],  // TO BE DELETED
+  // wishlist: [{
+  //   type: Schema.Types.ObjectId,
+  //   ref: 'Trip'
+  // }],  // TO BE DELETED
+  // history: [{
+  //   type: Schema.Types.ObjectId,
+  //   ref: 'Trip'
+  // }],  // TO BE DELETED
+
   // optionals
   cityOrigin: String,
   avatarUrl: String,
