@@ -1,0 +1,100 @@
+Island,City
+Bali,Denpasar
+Java,Bandung
+Java,Banjar
+Java,Batu
+Java,Bekasi
+Java,Blitar
+Java,Bogor
+Java,Cianjur
+Java,Cilegon
+Java,Cimahi
+Java,Cirebon
+Java,Depok
+Java,Jakarta
+Java,Kediri
+Java,Madiun
+Java,Magelang
+Java,Malang
+Java,Mojokerto
+Java,Pasuruan
+Java,Pekalongan
+Java,Probolinggo
+Java,Purwokerto
+Java,Salatiga
+Java,Semarang
+Java,Serang
+Java,South Tangerang
+Java,Sukabumi
+Java,Surabaya
+Java,Surakarta
+Java,Tasikmalaya
+Java,Tangerang
+Java,Tegal
+Java,Yogyakarta
+Kalimantan,Balikpapan
+Kalimantan,Banjarbaru
+Kalimantan,Banjarmasin
+Kalimantan,Bontang
+Kalimantan,Palangkaraya
+Kalimantan,Pontianak
+Kalimantan,Samarinda
+Kalimantan,Singkawang
+Tarakan,Tarakan
+Kalimantan,Tenggarong
+Ambon,Ambon
+Kai,Tual
+Ternate,Ternate
+Tidore,Tidore
+Sumbawa,Bima
+Lombok,Mataram
+Timor,Kupang
+Timor,Atambua
+New Guinea,Jayapura
+New Guinea,Merauke
+New Guinea,Kota Sorong
+New Guinea,Manokwari
+Buton,Bau-Bau
+Sulawesi,Bitung
+Sulawesi,Gorontalo
+Sulawesi,Kendari
+Sulawesi,Kotamobagu
+Sulawesi,Makassar
+Sulawesi,Manado
+Sulawesi,Palu
+Sulawesi,Pare-Pare
+Sulawesi,Palopo
+Sulawesi,Tomohon
+Sumatra,Banda Aceh
+Sumatra,Bandar Lampung
+Batam,Batam
+Sumatra,Bengkulu
+Sumatra,Binjai
+Sumatra,Bukittinggi
+Sumatra,Dumai
+Sumatra,Gunungsitoli
+Sumatra,Jambi
+Sumatra,Langsa
+Sumatra,Lhokseumawe
+Sumatra,Lubuklinggau
+Sumatra,Medan
+Sumatra,Metro
+Sumatra,Padang
+Sumatra,Padang Panjang
+Sumatra,Padang Sidempuan
+Sumatra,Pagar Alam
+Sumatra,Palembang
+Bangka,Pangkal Pinang
+Sumatra,Pariaman
+Sumatra,Payakumbuh
+Sumatra,Pekanbaru
+Sumatra,Pematang Siantar
+Sumatra,Prabumulih
+Weh Island,Sabang
+Sumatra,Sawah Lunto
+Sumatra,Sibolga
+Sumatra,Solok
+Sumatra,Sungai Penuh
+Sumatra,Tanjung Balai
+Bintan,Tanjung Pinang
+Sumatra,Tebing Tinggi
