@@ -10,6 +10,10 @@ const provinceSchema = new Schema({
     type: String,
     required: true
   },
+  country: {
+    type: String,
+    required: true
+  },
   latitude: {
     type: String,
     required: true
@@ -21,5 +25,6 @@ const provinceSchema = new Schema({
 }, {
   timestamps: true
 })
+
 
 module.exports = mongoose.model('Province', provinceSchema)

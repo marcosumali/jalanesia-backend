@@ -1,8 +1,8 @@
 const express = require('express')
+const users = express.Router()
+
 const { findAll, findOne, add, deletion, signIn, getProfile, deleteUser, updatePhone } = require('../controllers/user.controller')
 const { authentication, authorisation } = require('../middlewares/user.auth')
-
-const users = express.Router()
 
 // need to add update, login, logout, addComment, fblogin, g+ login, twitter login
 
