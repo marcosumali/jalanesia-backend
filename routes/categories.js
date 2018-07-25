@@ -11,7 +11,7 @@ const {
 
 categories
   .get('/', findAll)
-  .get('/by', findOne)
+  .get('/byId', findOne)
   .post('/', add)
   .put('/', update)
   .delete('/', deletion)

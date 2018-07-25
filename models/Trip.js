@@ -4,7 +4,8 @@ const Schema = mongoose.Schema
 const tripSchema = new Schema({
   supplierId: {
     type: Schema.Types.ObjectId,
-    ref: 'Supplier'
+    ref: 'Supplier',
+    required: true
   },
   name: {
     type: String,
@@ -22,23 +23,19 @@ const tripSchema = new Schema({
     type: Number, 
     required: true
   },
-  location: {
-    city: {
-      type: String ,
-      required: true
-    },
-    country: {
-      type: String,
-      required: true
-    },
-    latitude: Number,
-    longitude: Number,
+  locationId: {
+    type: Schema.Types.ObjectId,
+    ref: 'City',
+    required: true
   },
   quota: {
     type: Number,
     required: true
   },
-  difficulty: String,
+  difficulty: {
+    type: String,
+    required: true
+  },
   description: {
     highlight: {
       type: String,
@@ -50,8 +47,9 @@ const tripSchema = new Schema({
     notes: String,
     terms: String
   },
-  category: {
-    type: String,
+  categoryId: {
+    type: Schema.Types.ObjectId,
+    ref: 'Category',
     required: true
   },
   promoteStatus: {

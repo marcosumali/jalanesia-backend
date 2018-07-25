@@ -6,12 +6,10 @@ const saltRounds = Number(process.env.SALTROUNDS)
 
 const supplierSchema = new Schema({
   name: String,
-
-  // username: {
-  //   type: String,
-  //   unique: true
-  // }, // TO BE DELETED
-  
+  username: {
+    type: String,
+    unique: true
+  },  
   email: {
     type: String,
     trim: true,

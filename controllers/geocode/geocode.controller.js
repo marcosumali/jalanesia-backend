@@ -248,6 +248,38 @@ module.exports = {
           err
         })
       })
+  },
+  getCityByIsland: (req, res) => {
+    let { name } = req.query
+    City.findOne({ island: name })
+      .then(city => {
+        res.status(200).json({
+          message: 'Get city by island successful',
+          city
+        })
+      })
+      .catch(err => {
+        res.status(400).json({
+          message: 'ERROR: unable to get city by island',
+          err
+        })
+      })
+  },
+  getCity: (req, res) => {
+    let { name } = req.query
+    City.findOne({ name })
+      .then(city => {
+        res.status(200).json({
+          message: 'Get city by name successful',
+          city
+        })
+      })
+      .catch(err => {
+        res.status(400).json({
+          message: 'ERROR: unable to get city by name',
+          err
+        })
+      })
   }
 
 
