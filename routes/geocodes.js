@@ -6,7 +6,9 @@ const {
   provinceGetAll,
   cityCheckAll,
   citySaveAll,
-  cityGetAll
+  cityGetAll,
+  getCity,
+  getCityByIsland,
 } = require('../controllers/geocode/geocode.controller')
 
 geocodes
@@ -15,7 +17,9 @@ geocodes
   .get('/province/saveAll', provinceSaveAll)
   .get('/city', cityGetAll)
   .get('/city/check', cityCheckAll)
-  .get('/city/saveAll', citySaveAll)  
+  .get('/city/saveAll', citySaveAll)
+  .get('/city/byName', getCity)
+  .get('/city/byIsland', getCityByIsland)  
 
 
 module.exports = geocodes
