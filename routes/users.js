@@ -25,7 +25,7 @@ users
   .get('/', findAll)                                                          // GET all users (admin role only) - admin not yet prepared
   .get('/profile', authentication, authorisation, getProfile)                 // GET user profile (admin role and related user only)
   .post('/', add)                                                             // POST new user (register)
-  .post('/signin', signIn)                                                    // POST user verification to get token (sign in)
+  .post('/signIn', signIn)                                                    // POST user verification to get token (sign in)
   .put('/', authentication, authorisation, updateProfile)                     // PUT update user profile
   .put('/updatePhone', authentication, authorisation, updatePhone)            // PUT update user phone
   .put('/updateCity', authentication, authorisation, updateCityOrigin)        // PUT update user city
