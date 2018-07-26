@@ -5,10 +5,22 @@ const Schema = mongoose.Schema
 const saltRounds = Number(process.env.SALTROUNDS)
 
 const userSchema = new Schema({
-  firstName: String,
-  lastName: String,
-  dob: Date,
-  gender: String,
+  firstName: {
+    type: String,
+    // required: true
+  },
+  lastName: {
+    type: String,
+    // required: true
+  },
+  dob: {
+    type: Date,
+    // required: true
+  },
+  gender: {
+    type: String,
+    // required: true
+  },
   phone: String,
   email: {
     type: String,
@@ -37,7 +49,10 @@ const userSchema = new Schema({
   // }],  // TO BE DELETED
 
   // optionals
-  cityOrigin: String,
+  cityOriginId: {
+    type: Schema.Types.ObjectId,
+    ref: 'City',
+  },
   avatarUrl: String,
 }, {
   timestamps: true
