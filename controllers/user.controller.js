@@ -192,7 +192,7 @@ module.exports = {
     let { _id } = req.decoded;
     let { firstName, lastName, dob, gender, phone, email, password, cityOriginId, avatarUrl } = req.body
 
-    User.findByIdAndUpdate( _id, {
+    User.update({ _id }, { $set: {
       firstName: firstName || '',
       lastName: lastName || '',
       dob: dob || '',
@@ -202,7 +202,7 @@ module.exports = {
       password,
       cityOriginId: cityOriginId || '111111111111111111111111',
       avatarUrl: avatarUrl || '', 
-    })
+    }})
       .populate({ path: 'cityOriginId', select: '-_id' })
       .exec()
       .then(updatedUser => {
