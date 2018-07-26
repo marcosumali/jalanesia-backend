@@ -7,6 +7,7 @@ const privateKey = process.env.PRIVATEKEY
 module.exports = {
   findAll: (req, res) => {
     User.find()
+      .populate({ path: 'cityOriginId', select: '-_id' })
       .exec()
       .then(users => {
         res.status(200).json({
@@ -21,32 +22,35 @@ module.exports = {
         })
       })
   },
-  findOne: (req, res) => {
-    User.findById(req.params.id)
-      .exec()
-      .then(user => {
-        res.status(200).json({
-          message: 'User profile retrieved',
-          user
-        })
-      })
-      .catch(err => {
-        res.status(400).json({
-          message: 'ERROR: unable to fetch user profile',
-          err
-        })
-      })
-  },
+  // findOne: (req, res) => {
+  //   User.findById(req.params.id)
+  //     .exec()
+  //     .then(user => {
+  //       res.status(200).json({
+  //         message: 'User profile retrieved',
+  //         user
+  //       })
+  //     })
+  //     .catch(err => {
+  //       res.status(400).json({
+  //         message: 'ERROR: unable to fetch user profile',
+  //         err
+  //       })
+  //     })
+  // },
   add: (req, res) => {
+    let { firstName, lastName, dob, gender, phone, email, password, cityOriginId, avatarUrl } = req.body
     User.create({
       // input field here
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      dob: req.body.dob,
-      gender: req.body.gender,
-      phone: req.body.phone || '',
-      email: req.body.email,
-      password: req.body.password,
+      firstName: firstName || '',
+      lastName: lastName || '',
+      dob: dob || '',
+      gender: gender || '',
+      phone: phone || '',
+      email,
+      password,
+      cityOriginId: cityOriginId || '111111111111111111111111',
+      avatarUrl: avatarUrl || '', 
     })
       .then(user => {
         let userJwt = { _id: user._id ,firstName: user.firstName, lastName: user.lastName, email: user.email }
@@ -64,25 +68,26 @@ module.exports = {
         })
       })
   },
-  deletion: (req, res) => {
-    User.findByIdAndRemove(req.params.id)
-      .exec()
-      .then(user => {
-        res.status(200).json({
-          message: 'User deleted',
-          user
-        })
-      })
-      .catch(err => {
-        res.status(400).json({
-          message: 'ERROR: unable to delete user',
-          err
-        })
-      })
-  },
+  // deletion: (req, res) => {
+  //   User.findByIdAndRemove(req.params.id)
+  //     .exec()
+  //     .then(user => {
+  //       res.status(200).json({
+  //         message: 'User deleted',
+  //         user
+  //       })
+  //     })
+  //     .catch(err => {
+  //       res.status(400).json({
+  //         message: 'ERROR: unable to delete user',
+  //         err
+  //       })
+  //     })
+  // },
   signIn: (req, res) => {
     let { email, password } = req.body
     User.findOne({ email })
+      .populate({ path: 'cityOriginId', select: '-_id' })
       .exec()
       .then(user => {
         let checkHash = bcrypt.compareSync(password, user.password); // true or false
@@ -110,6 +115,7 @@ module.exports = {
   getProfile: (req,res) => {
     let { _id } = req.decoded;
     User.findById( _id )
+      .populate({ path: 'cityOriginId', select: '-_id' })
       .exec()
       .then(user => {
         res.status(200).json({
@@ -127,6 +133,7 @@ module.exports = {
   deleteUser: (req, res) => {
     let { _id } = req.decoded;
     User.findByIdAndRemove( _id )
+      .populate({ path: 'cityOriginId', select: '-_id' })
       .exec()
       .then(user => {
         res.status(200).json({
@@ -146,16 +153,67 @@ module.exports = {
     let { phone } = req.body;
 
     User.findByIdAndUpdate( _id, { phone } )
+      .populate({ path: 'cityOriginId', select: '-_id' })
       .exec()
-      .then(user => {
+      .then(updatedUser => {
         res.status(200).json({
           message: 'User phone updated',
-          user
+          updatedUser
         })
       })
       .catch(err => {
         res.status(400).json({
           message: 'ERROR: unable to find user to update phone',
+          err
+        })
+      })
+  },
+  updateCityOrigin: (req, res) => {
+    let { _id } = req.decoded;
+    let { cityOriginId } = req.body;
+
+    User.findByIdAndUpdate( _id, { cityOriginId } )
+      .populate({ path: 'cityOriginId', select: '-_id' })
+      .exec()
+      .then(updatedUser => {
+        res.status(200).json({
+          message: 'User city location updated',
+          updatedUser
+        })
+      })
+      .catch(err => {
+        res.status(400).json({
+          message: 'ERROR: unable to find user to update city location',
+          err
+        })
+      })
+  },
+  updateProfile: (req, res) => {
+    let { _id } = req.decoded;
+    let { firstName, lastName, dob, gender, phone, email, password, cityOriginId, avatarUrl } = req.body
+
+    User.findByIdAndUpdate( _id, {
+      firstName: firstName || '',
+      lastName: lastName || '',
+      dob: dob || '',
+      gender: gender || '',
+      phone: phone || '',
+      email,
+      password,
+      cityOriginId: cityOriginId || '111111111111111111111111',
+      avatarUrl: avatarUrl || '', 
+    })
+      .populate({ path: 'cityOriginId', select: '-_id' })
+      .exec()
+      .then(updatedUser => {
+        res.status(200).json({
+          message: 'User updated',
+          updatedUser,
+        })
+      })
+      .catch(err => {
+        res.status(400).json({
+          message: 'ERROR:: unable to update user profile',
           err
         })
       })
