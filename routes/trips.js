@@ -1,5 +1,10 @@
 const express = require('express')
 const trips = express.Router()
+
+const {
+  getRemainingQuota
+} = require('../middlewares/trip.auth')
+
 const { 
   findAll, 
   findOne, 
@@ -18,7 +23,7 @@ const {
 
 trips
   .get('/', findAll)
-  .get('/byId', findOne)
+  .get('/byId', getRemainingQuota, findOne)
   .get('/bySupplier', findBySupplier)
   .get('/category', getTripsByCategory)
   .get('/promoted', getPromotedTrips)
@@ -30,5 +35,6 @@ trips
   .put('/', updateTrip)
   .put('/promote', promoteTrip)
   .delete('/', deleteTrip)
+
 
 module.exports = trips

@@ -1,5 +1,7 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const UserTrip = require('../models/UserTrip');
+
 
 module.exports = {
   authentication: (req, res, next) => {

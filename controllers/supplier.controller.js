@@ -1,4 +1,6 @@
 const Supplier = require('../models/Supplier')
+const Trip = require('../models/Trip')
+const UserTrip = require('../models/UserTrip')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 
@@ -222,6 +224,90 @@ module.exports = {
           err
         })
       })
-    },
+  },
+  getStatistics: (req, res) => {
+    let { id } = req.query
+
+    Trip.find({ supplierId: id })
+      .then(async trips => {
+        let positiveTrips = []
+        let negativeTrips = []
+        let neutralTrips = []
+        let oneStarTrips = []
+        let twoStarTrips = []
+        let threeStarTrips = []
+        let fourStarTrips = []
+        let fiveStarTrips = []
+        let totalStar = 0
+        let totalLengthStar = 0
+
+        await Promise.all(trips.map(async (trip, index) => {
+          await UserTrip.find({ tripId: trip._id })
+            .then(async userTrips => {
+
+              await Promise.all(userTrips.map((userTrip, index) => {
+                if (userTrip.sentiment === "positive") {
+                  positiveTrips.push(userTrip)
+                } else if (userTrip.sentiment === "negative") {
+                  negativeTrips.push(userTrip)
+                } else if (userTrip.sentiment === "neutral") {
+                  neutralTrips.push(userTrip)
+                }
+
+                if (userTrip.score === 1) {
+                  oneStarTrips.push(userTrip)
+                  totalStar += 1
+                  totalLengthStar += 1
+                } else if (userTrip.score === 2) {
+                  twoStarTrips.push(userTrip)
+                  totalStar += 2
+                  totalLengthStar += 1
+                } else if (userTrip.score === 3) {
+                  threeStarTrips.push(userTrip)
+                  totalStar += 3
+                  totalLengthStar += 1
+                } else if (userTrip.score === 4) {
+                  fourStarTrips.push(userTrip)
+                  totalStar += 4
+                  totalLengthStar += 1
+                } else if (userTrip.score === 5) {
+                  fiveStarTrips.push(userTrip)
+                  totalStar += 5
+                  totalLengthStar += 1
+                }
+              }))
+            })
+            .catch(err => {
+              res.status(404).json({
+                message: 'ERROR: find history based on user trip Id',
+                err
+              })
+            })
+        }))
+
+        await res.status(200).json({
+          message: 'Get supplier statistics successful',
+          positiveTrips,
+          negativeTrips,
+          neutralTrips,
+          oneStarTrips,
+          twoStarTrips,
+          threeStarTrips,
+          fourStarTrips,
+          fiveStarTrips,
+          averageStar: totalStar / totalLengthStar
+        })
+
+      })
+      .catch(err => {
+        res.status(404).json({
+          message: 'ERROR: find trip based on supplier Id',
+          err
+        })
+      })
+
+    
+
+  }
 
 }

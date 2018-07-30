@@ -23,8 +23,9 @@ module.exports = {
       })
   },
   findOne: (req, res) => {
-    let { id } = req.query
-    Trip.findById(id)
+    let { tripId } = req.query
+    let userList = req.userList
+    Trip.findById(tripId)
       .populate({ path: 'supplierId', select: '-_id -password -npwp -personalId' })
       .populate({ path: 'locationId', select: '-_id' })
       .populate({ path: 'categoryId', select: '-_id' })
@@ -32,7 +33,8 @@ module.exports = {
       .then(trip => {
         res.status(200).json({
           message: 'Trip retrieved successfully',
-          trip
+          trip,
+          userList
         })
       })
       .catch(err => {

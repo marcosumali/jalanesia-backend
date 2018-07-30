@@ -10,18 +10,20 @@ const {
   deleteSupplier,
   updatePhone,
   updateProfile,
-  signIn
+  signIn,
+  getStatistics
 } = require('../controllers/supplier.controller')
 
 const { 
   authentication, 
   authorisation 
-} = require('../middlewares/user.auth')
+} = require('../middlewares/supplier.auth')
 
 
 supplier
   .get('/', findAll)                                                       // GET all supplier (admin role only) - admin not yet prepared
-  .get('/profile', authentication, authorisation, getProfile)              // GET all supplier (admin role only) - admin not yet prepared
+  .get('/profile', authentication, authorisation, getProfile)              
+  .get('/statistics', getStatistics)
   .post('/', add)                                                          // POST new supplier (register)
   .post('/signIn', signIn)
   .put('/', authentication, authorisation, updateProfile)
