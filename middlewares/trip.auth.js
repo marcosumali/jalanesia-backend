@@ -2,7 +2,6 @@ const Trip = require('../models/Trip');
 const UserTrip = require('../models/UserTrip');
 
 
-
 module.exports = {
   getRemainingQuota: (req, res, next) => {
     let { tripId } = req.query // trip Id
@@ -42,31 +41,6 @@ module.exports = {
         } else {
           let error = new Error('Quantity is more then available seats on trip !')
           next(error)
-        }
-      })
-      .catch(err => {
-        let error = new Error('Your trip Id is not found !')
-        next(error)
-      })
-  },
-  deductQuota: (req, res, next) => {
-    let { tripId, quantity } = req.body
-
-    Trip.findOne({ _id: tripId })
-      .then(trip => {
-        let newQuota = trip.quota - quantity
-        if (trip.status === 'payment confirmed') {
-          Trip.findByIdAndUpdate({ _id: tripId }, { quota: newQuota })
-            .then(trip => {
-              next()
-            })
-            .catch(err => {
-              let error = new Error('Your trip Id is not found to be updated  !')
-              next(error)
-            })
-        } else {
-          let error = new Error('Your trip payment not yet confirmed  !')
-          next(error)  
         }
       })
       .catch(err => {
