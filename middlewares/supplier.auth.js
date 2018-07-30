@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const Supplier = require('../models/Supplier');
 
+
 module.exports = {
   authentication: (req, res, next) => {
     let token = req.headers.authkey;
