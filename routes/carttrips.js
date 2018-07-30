@@ -7,23 +7,31 @@ const {
 } = require('../middlewares/user.auth')
 
 const {
-  getCart, 
-  autherror 
+  getCart,
+  checkCart
 } = require('../middlewares/cart.auth')
+
+const { 
+  getRemainingQuota,
+  checkQuotaTrip,
+  autherror
+} = require('../middlewares/trip.auth')
 
 const { 
   findAll, 
   findOne, 
   add,
   deletion,
-  findByUser
+  findByUser,
+  updateQty
 } = require('../controllers/cartTrip.controller')
 
 carttrips
   .get('/', findAll)
   .get('/byUser', authentication, authorisation, getCart, autherror, findByUser)
-  .post('/', authentication, authorisation, getCart, autherror, add)
-  .delete('/', authentication, authorisation, getCart, autherror, deletion)
+  .post('/', authentication, authorisation, getCart, checkCart, getRemainingQuota, checkQuotaTrip, autherror, add)
+  .put('/', authentication, authorisation, getCart, checkCart, getRemainingQuota, checkQuotaTrip, autherror, updateQty)
+  .delete('/', authentication, authorisation, getCart, checkCart, autherror, deletion)
 
   
 module.exports = carttrips

@@ -40,21 +40,75 @@ module.exports = {
   },
   add: (req, res) => {
     let { _id } = req.cart // Cart Id for related User
-    let { tripId, quantity } = req.body
-    CartTrip.create({
-      cartId: _id,
-      tripId,
+    let { tripId } = req.query // trip Id
+    let { quantity } = req.body
+    CartTrip.find({ tripId })
+      .then(trip => {
+        if (trip && trip.length !== 0) {
+          let addQuantity = trip[0].quantity + 1
+          CartTrip.findByIdAndUpdate(trip[0]._id, {
+            quantity: addQuantity,
+          })
+            .populate({ path: 'cartId', select: '-userId' })
+            .populate({ path: 'tripId', select: '-_id -supplierId' })
+            .exec()
+            .then(cartTrip => {
+              res.status(200).json({
+                message: 'New Cart Trip quantity added successfully',
+                cartTrip
+              })
+            })
+            .catch(err => {
+              res.status(400).json({
+                message: 'ERROR: unable to add qty Cart Trip',
+                err
+              })
+            })
+        } else {
+          CartTrip.create({
+            cartId: _id,
+            tripId,
+            quantity,
+          })
+            .then(cartTrip => {
+              res.status(200).json({
+                message: 'New Cart Trip added successfully',
+                cartTrip
+              })
+            })
+            .catch(err => {
+              res.status(400).json({
+                message: 'ERROR: unable to add Cart Trip',
+                err
+              })
+            })
+        }
+      })
+      .catch(err => {
+        res.status(400).json({
+          message: 'ERROR: unable to find trip Id on Cart Trip',
+          err
+        })
+      })
+  },
+  updateQty: (req, res) => {
+    let { id } = req.query // Cart trip Id
+    let { quantity } = req.body
+    CartTrip.findByIdAndUpdate(id, {
       quantity,
     })
+      .populate({ path: 'cartId', select: '-userId' })
+      .populate({ path: 'tripId', select: '-_id -supplierId' })
+      .exec()
       .then(cartTrip => {
         res.status(200).json({
-          message: 'New Cart Trip added successfully',
+          message: 'New Cart Trip updated successfully',
           cartTrip
         })
       })
       .catch(err => {
         res.status(400).json({
-          message: 'ERROR: unable to add Cart Trip',
+          message: 'ERROR: unable to update Cart Trip',
           err
         })
       })

@@ -17,6 +17,14 @@ module.exports = {
       })
 
   },
+  checkCart: (req, res, next) => {
+    if (req.cart) {
+      next()
+    } else {
+      let error = new Error('No cart found !')
+      next(error)
+    }
+  },
   autherror: (err, req, res, next) => {
     if (err) {
       let indexEx = err.stack.indexOf('!')
