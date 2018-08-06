@@ -10,9 +10,25 @@ module.exports = {
       .populate({ path: 'cityOriginId', select: '-_id' })
       .exec()
       .then(users => {
+        let filteredUsers = []
+        users.map((user) => {
+          let pushedUser = {
+            firstname: user.firstName, 
+            lastName: user.lastName, 
+            dob: user.dob, 
+            gender: user.gender, 
+            phone: user.phone, 
+            email: user.email, 
+            cityOriginId: user.cityOriginId, 
+            avatarUrl: user.avatarUrl,
+            createdAt: user.createdAt,
+            updatedAt: user.updatedAt
+          }
+          filteredUsers.push(pushedUser)
+        })
         res.status(200).json({
           message: 'All users retrieved',
-          users
+          users: filteredUsers
         })
       })
       .catch(err => {
@@ -41,7 +57,6 @@ module.exports = {
   add: (req, res) => {
     let { firstName, lastName, dob, gender, phone, email, password, cityOriginId, avatarUrl } = req.body
     User.create({
-      // input field here
       firstName: firstName || '',
       lastName: lastName || '',
       dob: dob || '',
@@ -54,10 +69,22 @@ module.exports = {
     })
       .then(user => {
         let userJwt = { _id: user._id ,firstName: user.firstName, lastName: user.lastName, email: user.email }
-        let token = jwt.sign(userJwt, privateKey)    
+        let token = jwt.sign(userJwt, privateKey)
+        let filteredUser = {
+          firstname: user.firstName, 
+          lastName: user.lastName, 
+          dob: user.dob, 
+          gender: user.gender, 
+          phone: user.phone, 
+          email: user.email, 
+          cityOriginId: user.cityOriginId, 
+          avatarUrl: user.avatarUrl,
+          createdAt: user.createdAt,
+          updatedAt: user.updatedAt
+        }
         res.status(200).json({
           message: 'New user added',
-          user,
+          user: filteredUser,
           token
         })
       })
@@ -94,9 +121,21 @@ module.exports = {
         if (checkHash == true) {
           let userJwt = { _id: user._id, firstName: user.firstName, lastName: user.lastName, email: user.email }
           let token = jwt.sign(userJwt, privateKey)
+          let filteredUser = {
+            firstname: user.firstName, 
+            lastName: user.lastName, 
+            dob: user.dob, 
+            gender: user.gender, 
+            phone: user.phone, 
+            email: user.email, 
+            cityOriginId: user.cityOriginId, 
+            avatarUrl: user.avatarUrl,
+            createdAt: user.createdAt,
+            updatedAt: user.updatedAt
+          }
           res.status(200).json({
             message: 'User sign in is successful',  
-            user,
+            user: filteredUser,
             token
           })
         } else {
@@ -118,9 +157,21 @@ module.exports = {
       .populate({ path: 'cityOriginId', select: '-_id' })
       .exec()
       .then(user => {
+        let filteredUser = {
+          firstname: user.firstName, 
+          lastName: user.lastName, 
+          dob: user.dob, 
+          gender: user.gender, 
+          phone: user.phone, 
+          email: user.email, 
+          cityOriginId: user.cityOriginId, 
+          avatarUrl: user.avatarUrl,
+          createdAt: user.createdAt,
+          updatedAt: user.updatedAt
+        }
         res.status(200).json({
           message: 'Get user profile successful',
-          user
+          user: filteredUser
         })
       })
       .catch(err => {
@@ -136,9 +187,21 @@ module.exports = {
       .populate({ path: 'cityOriginId', select: '-_id' })
       .exec()
       .then(user => {
+        let filteredUser = {
+          firstname: user.firstName, 
+          lastName: user.lastName, 
+          dob: user.dob, 
+          gender: user.gender, 
+          phone: user.phone, 
+          email: user.email, 
+          cityOriginId: user.cityOriginId, 
+          avatarUrl: user.avatarUrl,
+          createdAt: user.createdAt,
+          updatedAt: user.updatedAt
+        }
         res.status(200).json({
           message: 'User deleted',
-          user
+          user: filteredUser
         })
       })
       .catch(err => {
@@ -156,9 +219,21 @@ module.exports = {
       .populate({ path: 'cityOriginId', select: '-_id' })
       .exec()
       .then(updatedUser => {
+        let filteredUser = {
+          firstname: updatedUser.firstName, 
+          lastName: updatedUser.lastName, 
+          dob: updatedUser.dob, 
+          gender: updatedUser.gender, 
+          phone: updatedUser.phone, 
+          email: updatedUser.email, 
+          cityOriginId: updatedUser.cityOriginId, 
+          avatarUrl: updatedUser.avatarUrl,
+          createdAt: updatedUser.createdAt,
+          updatedAt: updatedUser.updatedAt
+        }
         res.status(200).json({
           message: 'User phone updated',
-          updatedUser
+          user: filteredUser
         })
       })
       .catch(err => {
@@ -176,9 +251,21 @@ module.exports = {
       .populate({ path: 'cityOriginId', select: '-_id' })
       .exec()
       .then(updatedUser => {
+        let filteredUser = {
+          firstname: updatedUser.firstName, 
+          lastName: updatedUser.lastName, 
+          dob: updatedUser.dob, 
+          gender: updatedUser.gender, 
+          phone: updatedUser.phone, 
+          email: updatedUser.email, 
+          cityOriginId: updatedUser.cityOriginId, 
+          avatarUrl: updatedUser.avatarUrl,
+          createdAt: updatedUser.createdAt,
+          updatedAt: updatedUser.updatedAt
+        }
         res.status(200).json({
           message: 'User city location updated',
-          updatedUser
+          user: filteredUser
         })
       })
       .catch(err => {
@@ -189,31 +276,137 @@ module.exports = {
       })
   },
   updateProfile: (req, res) => {
-    let { _id } = req.decoded;
-    let { firstName, lastName, dob, gender, phone, email, password, cityOriginId, avatarUrl } = req.body
+    let { _id } = req.decoded
+    let { firstName, lastName, dob, gender, phone, email, cityOriginId, avatarUrl } = req.body
 
-    User.update({ _id }, { $set: {
-      firstName: firstName || '',
-      lastName: lastName || '',
-      dob: dob || '',
-      gender: gender || '',
-      phone: phone || '',
+    User.findByIdAndUpdate(_id, {
+      firstName,
+      lastName,
+      dob,
+      gender,
+      phone,
       email,
-      password,
       cityOriginId: cityOriginId || '111111111111111111111111',
-      avatarUrl: avatarUrl || '', 
-    }})
+    })
       .populate({ path: 'cityOriginId', select: '-_id' })
       .exec()
       .then(updatedUser => {
+        let filteredUser = { 
+          firstname: updatedUser.firstName, 
+          lastName: updatedUser.lastName, 
+          dob: updatedUser.dob, 
+          gender: updatedUser.gender, 
+          phone: updatedUser.phone, 
+          email: updatedUser.email, 
+          cityOriginId: updatedUser.cityOriginId, 
+          avatarUrl: updatedUser.avatarUrl,
+          createdAt: updatedUser.createdAt,
+          updatedAt: updatedUser.updatedAt
+        }
         res.status(200).json({
           message: 'User updated',
-          updatedUser,
+          user: filteredUser,
         })
       })
       .catch(err => {
         res.status(400).json({
-          message: 'ERROR:: unable to update user profile',
+          message: 'ERROR: unable to update user profile',
+          err
+        })
+      })
+  },
+  updatePassword: (req, res) => {
+    let { _id } = req.decoded
+    let { previousPass, newPass } = req.body
+    User.findById(_id)
+      .then(user => {
+        let checkHash = bcrypt.compareSync(previousPass, user.password); // true or false
+        if (checkHash === true) {
+          User.update({ _id }, { $set: {
+            password: newPass, 
+          }})
+            .populate({ path: 'cityOriginId', select: '-_id' })
+            .exec()
+            .then(updatedUser => {
+              res.status(200).json({
+                message: 'User password updated',
+                updatedUser,
+              })
+            })
+            .catch(err => {
+              res.status(400).json({
+                message: 'ERROR: unable to update user password',
+                err
+              })
+            })
+
+        } else {
+          res.status(400).json({
+            message: 'ERROR: incorrect password',
+            err
+          })
+        }
+      })
+      .catch(err => {
+        res.status(400).json({
+          message: 'ERROR: unable to find user to check authorisation',
+          err
+        })
+      })
+  },
+  updateAvatar: (req, res) => {
+    let { _id } = req.decoded
+    if (req.file) {
+      let image = req.file.cloudStoragePublicUrl
+  
+      User.findByIdAndUpdate(_id, {
+        avatarUrl: image
+      })
+        .populate({ path: 'cityOriginId', select: '-_id' })
+        .exec()
+        .then(updatedUser => {
+          let filteredUser = { 
+            firstname: updatedUser.firstName, 
+            lastName: updatedUser.lastName, 
+            dob: updatedUser.dob, 
+            gender: updatedUser.gender, 
+            phone: updatedUser.phone, 
+            email: updatedUser.email, 
+            cityOriginId: updatedUser.cityOriginId, 
+            avatarUrl: updatedUser.avatarUrl,
+            createdAt: updatedUser.createdAt,
+            updatedAt: updatedUser.updatedAt
+          }
+          res.status(200).json({
+            message: 'User avatar updated',
+            user: filteredUser,
+            link: image
+          })
+        })
+        .catch(err => {
+          res.status(400).json({
+            message: 'ERROR: unable to update user profile avatar',
+            err
+          })
+        })
+    } else {
+      res.status(400).json({
+        message: 'ERROR: no file identified'
+      })
+    }
+  },
+  getAvatarNext: (req, res, next) => {
+    let { _id } = req.decoded;
+    User.findById( _id )
+      .populate({ path: 'cityOriginId', select: '-_id' })
+      .exec()
+      .then(user => {
+        req.avatarUrl = { avatarUrl: user.avatarUrl }
+        next()
+      })
+      .catch(err => {
+        res.status(400).json({
+          message: 'ERROR: get user profile next usuccessful',
           err
         })
       })

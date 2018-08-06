@@ -6,9 +6,11 @@ const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 
 const PORT = process.env.PORT || 4000
+const MLABUser = process.env.MLABADMIN
+const MLABPassword = process.env.MLABUSERPASS 
 const db = mongoose.connection
 const dbURL = 'mongodb://localhost:27017/jalanesia'
-const mongodbURL = 'mongodb://Admin:trip123@ds147659.mlab.com:47659/server-trips'
+const mongodbURL = `mongodb://${MLABUser}:${MLABPassword}@ds147659.mlab.com:47659/server-trips`
 
 const index = require('./routes/index')
 const users = require('./routes/users')

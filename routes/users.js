@@ -11,25 +11,38 @@ const {
   deleteUser, 
   updatePhone, 
   updateCityOrigin,
-  updateProfile
+  updateProfile,
+  updateAvatar,
+  updatePassword,
+  getAvatarNext
 } = require('../controllers/user.controller')
 
 const { 
   authentication, 
-  authorisation 
+  authorisation,
+  autherror
 } = require('../middlewares/user.auth')
+
+const {
+  getPublicUrl,
+  sendUploadToGCS,
+  multer,
+  deleteFileOnGCS
+} = require('../middlewares/gcp')
 
 // need to add update, login, logout, addComment, fblogin, g+ login, twitter login
 
 users
-  .get('/', findAll)                                                          // GET all users (admin role only) - admin not yet prepared
-  .get('/profile', authentication, authorisation, getProfile)                 // GET user profile (admin role and related user only)
-  .post('/', add)                                                             // POST new user (register)
-  .post('/signIn', signIn)                                                    // POST user verification to get token (sign in)
-  .put('/', authentication, authorisation, updateProfile)                     // PUT update user profile
-  .put('/updatePhone', authentication, authorisation, updatePhone)            // PUT update user phone
-  .put('/updateCity', authentication, authorisation, updateCityOrigin)        // PUT update user city
-  .delete('/delete', authentication, authorisation, deleteUser)               // DELETE user profile
+  .get('/', findAll)
+  .get('/profile', authentication, authorisation, autherror, getProfile)
+  .post('/', add)
+  .post('/signIn', signIn)
+  .put('/', authentication, authorisation, autherror, updateProfile)
+  .put('/updatePhone', authentication, authorisation, autherror, updatePhone)
+  .put('/updateCity', authentication, authorisation, autherror, updateCityOrigin)
+  .put('/updatePassword', authentication, authorisation, autherror, updatePassword)
+  .put('/updateAvatar', authentication, authorisation, getAvatarNext, multer.single('image'), deleteFileOnGCS, sendUploadToGCS, autherror, updateAvatar)
+  .delete('/delete', authentication, authorisation, autherror, deleteUser)
   
   // .get('/:id', findOne)                                                    // redundant with getProfile
   // .delete('/:id', deletion)                                                // redundant with delete
