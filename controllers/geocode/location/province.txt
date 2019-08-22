@@ -1,0 +1,35 @@
+Province,ISO,Capital,GeographicalUnit
+Aceh,ID-AC,Banda Aceh,Sumatra
+Bali,ID-BA,Denpasar,Lesser Sunda Islands
+Bangka Belitung Islands,ID-BB,Pangkalpinang,Sumatra
+Banten,ID-BT,Serang,Java
+Bengkulu,ID-BE,Bengkulu,Sumatra
+Central Java,ID-JT,Semarang,Java
+Central Kalimantan,ID-KT,Palangka Raya,Kalimantan
+Central Sulawesi,ID-ST,Palu,Sulawesi
+East Java,ID-JI,Surabaya,Java
+East Kalimantan,ID-KI,Samarinda,Kalimantan
+East Nusa Tenggara,ID-NT,Kupang,Lesser Sunda Islands
+Gorontalo,ID-GO,Gorontalo,Sulawesi
+Jakarta Special Capital Region,ID-JK,Central Jakarta,Java
+Jambi,ID-JA,Jambi,Sumatra
+Lampung,ID-LA,Bandar Lampung,Sumatra
+Maluku,ID-MA,Ambon,Maluku Islands
+North Kalimantan,ID-KU,Tanjung Selor,Kalimantan
+North Maluku,ID-MU,Sofifi,Maluku Islands
+North Sulawesi,ID-SA,Manado,Sulawesi
+North Sumatra,ID-SU,Medan,Sumatra
+Papua,ID-PA,Jayapura,Western New Guinea
+Riau,ID-RI,Pekanbaru,Sumatra
+Riau Islands,ID-KR,Tanjung Pinang,Sumatra
+Southeast Sulawesi,ID-SG,Kendari,Sulawesi
+South Kalimantan,ID-KS,Banjarmasin,Kalimantan
+South Sulawesi,ID-SN,Makassar,Sulawesi
+South Sumatra,ID-SS,Palembang,Sumatra
+West Java,ID-JB,Bandung,Java
+West Kalimantan,ID-KB,Pontianak,Kalimantan
+West Nusa Tenggara,ID-NB,Mataram,Lesser Sunda Islands
+Special Region of West Papua,ID-PB,Manokwari,Western New Guinea
+West Sulawesi,ID-SR,Mamuju,Sulawesi
+West Sumatra,ID-SB,Padang,Sumatra
+Special Region of Yogyakarta,ID-YO,Yogyakarta,Java

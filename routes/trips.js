@@ -1,18 +1,40 @@
 const express = require('express')
-const trip = express.Router()
+const trips = express.Router()
+
+const {
+  getRemainingQuota
+} = require('../middlewares/trip.auth')
+
 const { 
   findAll, 
   findOne, 
   findBySupplier,
   addTrip,
-  deleteTrip 
+  deleteTrip,
+  getPromotedTrips,
+  getDivingTrips,
+  getPartyTrips,
+  getHopingTrips,
+  getFilteredTrips,
+  getTripsByCategory,
+  promoteTrip,
+  updateTrip
 } = require('../controllers/trip.controller')
 
-trip
+trips
   .get('/', findAll)
-  .get('/:id', findOne)
-  .get('/by/:supplierName', findBySupplier)
-  .post('/by/:supplierName', addTrip)
-  .delete('/:id', deleteTrip)
+  .get('/byId', getRemainingQuota, findOne)
+  .get('/bySupplier', findBySupplier)
+  .get('/category', getTripsByCategory)
+  .get('/promoted', getPromotedTrips)
+  .get('/diving', getDivingTrips)
+  .get('/party', getPartyTrips)
+  .get('/islandhoping', getHopingTrips)
+  .get('/filter', getFilteredTrips)
+  .post('/', addTrip)
+  .put('/', updateTrip)
+  .put('/promote', promoteTrip)
+  .delete('/', deleteTrip)
 
-module.exports = trip
+
+module.exports = trips

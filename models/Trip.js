@@ -4,28 +4,58 @@ const Schema = mongoose.Schema
 const tripSchema = new Schema({
   supplierId: {
     type: Schema.Types.ObjectId,
-    ref: 'Supplier'
+    ref: 'Supplier',
+    required: true
   },
-  name: String,
-  startDate: Date,
-  endDate: Date,
-  price: Number,
-  location: {
-    city: String,
-    country: String,
-    latitude: Number,
-    longitude: Number,
+  name: {
+    type: String,
+    required: true
   },
-  quota: Number,
-  difficulty: String,
+  startDate: {
+    type: Date,
+    required: true
+  },
+  endDate: {
+    type: Date,
+    required: true
+  },
+  price: {
+    type: Number, 
+    required: true
+  },
+  locationId: {
+    type: Schema.Types.ObjectId,
+    ref: 'City',
+    required: true
+  },
+  quota: {
+    type: Number,
+    required: true
+  },
+  difficulty: {
+    type: String,
+    required: true
+  },
   description: {
-    highlight: String,
+    highlight: {
+      type: String,
+      required: true
+    },
     inclusive: String,
     excludes: String,
     itinerary: String,
     notes: String,
     terms: String
   },
+  categoryId: {
+    type: Schema.Types.ObjectId,
+    ref: 'Category',
+    required: true
+  },
+  promoteStatus: {
+    type: Boolean,
+    required: true
+  }
 }, {
   timestamps: true
 })

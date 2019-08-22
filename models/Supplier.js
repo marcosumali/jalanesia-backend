@@ -1,14 +1,18 @@
 const mongoose = require('mongoose')
+const bcrypt = require('bcryptjs')
+
 const Schema = mongoose.Schema
-const bcrypt = require('bcrypt')
-const saltRounds = 10
+const saltRounds = Number(process.env.SALTROUNDS)
 
 const supplierSchema = new Schema({
-  name: String,
-  username: {
+  name: { 
     type: String,
     unique: true
   },
+  username: {
+    type: String,
+    unique: true
+  },  
   email: {
     type: String,
     trim: true,
@@ -23,17 +27,22 @@ const supplierSchema = new Schema({
   },
   businessType: String,
   npwp: String,
-  personalId: String,
+  personalId: {
+    type: String,
+    unique: true
+  },
   social: {
     instagram: String,
     facebook: String,
   },
   phone: [String],
   address: String,
-  trips: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Trip'
-  }],
+
+  // trips: [{
+  //   type: Schema.Types.ObjectId,
+  //   ref: 'Trip'
+  // }], // TO BE DELETED
+
   companyAvatar: String
 }, {
   timestamps: true
@@ -48,5 +57,22 @@ supplierSchema.pre('save', function (next) {
     next()
   })
 })
+
+supplierSchema.pre('update', function (next) {
+  let supplier = this
+  if (supplier._update.$set.password){
+    bcrypt.genSalt(saltRounds, function (err, salt){
+      if (err) return next(err)
+      bcrypt.hash(supplier._update.$set.password, salt, function (err, hash){
+        if (err) return next(err)
+        supplier._update.$set.password = hash
+        next()
+      })
+    })
+  } else {
+      next()
+  }
+})
+
 
 module.exports = mongoose.model('Supplier', supplierSchema)

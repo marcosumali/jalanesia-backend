@@ -1,13 +1,26 @@
 const mongoose = require('mongoose')
+const bcrypt = require('bcryptjs')
+
 const Schema = mongoose.Schema
-const bcrypt = require('bcrypt')
-const saltRounds = 10
+const saltRounds = Number(process.env.SALTROUNDS)
 
 const userSchema = new Schema({
-  firstName: String,
-  lastName: String,
-  dob: Date,
-  gender: String,
+  firstName: {
+    type: String,
+    // required: true
+  },
+  lastName: {
+    type: String,
+    // required: true
+  },
+  dob: {
+    type: Date,
+    // required: true
+  },
+  gender: {
+    type: String,
+    // required: true
+  },
   phone: String,
   email: {
     type: String,
@@ -21,20 +34,25 @@ const userSchema = new Schema({
     type: String,
     required: 'password is required',
   },
-  trip: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Trip'
-  }],
-  wishlist: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Trip'
-  }],
-  history: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Trip'
-  }],
+  
+  // trip: [{
+  //   type: Schema.Types.ObjectId,
+  //   ref: 'Trip'
+  // }],  // TO BE DELETED
+  // wishlist: [{
+  //   type: Schema.Types.ObjectId,
+  //   ref: 'Trip'
+  // }],  // TO BE DELETED
+  // history: [{
+  //   type: Schema.Types.ObjectId,
+  //   ref: 'Trip'
+  // }],  // TO BE DELETED
+
   // optionals
-  cityOrigin: String,
+  cityOriginId: {
+    type: Schema.Types.ObjectId,
+    ref: 'City',
+  },
   avatarUrl: String,
 }, {
   timestamps: true
